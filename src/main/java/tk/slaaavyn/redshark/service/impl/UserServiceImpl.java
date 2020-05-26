@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tk.slaaavyn.redshark.dto.user.UpdatePasswordDto;
 import tk.slaaavyn.redshark.model.Role;
 import tk.slaaavyn.redshark.model.User;
+import tk.slaaavyn.redshark.repository.DeviceRepository;
 import tk.slaaavyn.redshark.repository.RoleRepository;
 import tk.slaaavyn.redshark.repository.UserRepository;
 import tk.slaaavyn.redshark.security.SecurityConstants;
@@ -17,12 +18,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final DeviceRepository deviceRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
-                           BCryptPasswordEncoder passwordEncoder) {
+                           DeviceRepository deviceRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.deviceRepository = deviceRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -119,6 +122,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
+        deviceRepository.deleteAllByUser_Id(user.getId());
         userRepository.delete(user);
         return true;
     }

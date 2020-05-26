@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import tk.slaaavyn.redshark.model.Device;
 import tk.slaaavyn.redshark.model.Role;
 import tk.slaaavyn.redshark.model.User;
+import tk.slaaavyn.redshark.repository.DeviceRepository;
 import tk.slaaavyn.redshark.repository.RoleRepository;
 import tk.slaaavyn.redshark.repository.UserRepository;
 import tk.slaaavyn.redshark.security.SecurityConstants;
@@ -24,12 +26,14 @@ public class DbInitializer implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final DeviceRepository deviceRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     public DbInitializer(RoleRepository roleRepository, UserRepository userRepository,
-                         BCryptPasswordEncoder passwordEncoder) {
+                         DeviceRepository deviceRepository, BCryptPasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.deviceRepository = deviceRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -37,6 +41,7 @@ public class DbInitializer implements CommandLineRunner {
     public void run(String... args) {
         initRoles();
         initAdmin();
+        initAdminDevices();
     }
 
     private void initRoles() {
@@ -75,5 +80,23 @@ public class DbInitializer implements CommandLineRunner {
         userRepository.save(user);
 
         logger.info("ADMIN has been initialized");
+    }
+
+    private void initAdminDevices() {
+        User user = userRepository.findUserById(1);
+
+        if(user != null && deviceRepository.findAllByUser_id(user.getId()).size() != 0) {
+            return;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Device device = new Device();
+            device.setName("AdminDevice" + i);
+            device.setUser(user);
+
+            deviceRepository.save(device);
+        }
+
+        logger.info("Devices has been initialized");
     }
 }
