@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface DeviceRepository extends JpaRepository<Device, Long> {
     Device findDeviceById(long id);
+    Device findDeviceByIdAndUser_Id(long id, long userId);
     List<Device> findAllByUser_id(long userId);
     void deleteAllByUser_Id(long userId);
 }
