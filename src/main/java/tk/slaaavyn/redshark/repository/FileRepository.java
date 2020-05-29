@@ -12,4 +12,5 @@ public interface FileRepository extends JpaRepository<File, Long> {
     File findByDevice_IdAndParent_IdAndName(Long deviceId, Long parentId, String fileName);
     List<File> findAllByDevice_IdAndParent_Id(Long deviceId, Long parentId);
     List<File> findAllByDevice_IdAndNameAndFileTypeAndDevice_User_Id(Long deviceId, String name, FileType fileType, Long userId);
+    void deleteAllByDevice_Id(Long deviceId);
 }

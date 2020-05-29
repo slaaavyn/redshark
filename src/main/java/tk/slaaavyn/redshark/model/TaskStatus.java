@@ -1,5 +1,5 @@
 package tk.slaaavyn.redshark.model;
 
-public enum JobStatus {
+public enum TaskStatus {
     PREPARING, PROCESSING, COMPLETE
 }

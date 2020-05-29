@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import tk.slaaavyn.redshark.model.Device;
 import tk.slaaavyn.redshark.model.User;
 import tk.slaaavyn.redshark.repository.DeviceRepository;
+import tk.slaaavyn.redshark.repository.FileRepository;
 import tk.slaaavyn.redshark.repository.UserRepository;
 import tk.slaaavyn.redshark.service.DeviceService;
 
@@ -14,10 +15,13 @@ public class DeviceServiceImpl implements DeviceService {
 
     private final DeviceRepository deviceRepository;
     private final UserRepository userRepository;
+    private final FileRepository fileRepository;
 
-    public DeviceServiceImpl(DeviceRepository deviceRepository, UserRepository userRepository) {
+    public DeviceServiceImpl(DeviceRepository deviceRepository, UserRepository userRepository,
+                             FileRepository fileRepository) {
         this.deviceRepository = deviceRepository;
         this.userRepository = userRepository;
+        this.fileRepository = fileRepository;
     }
 
     @Override
@@ -68,6 +72,7 @@ public class DeviceServiceImpl implements DeviceService {
             return false;
         }
 
+        fileRepository.deleteAllByDevice_Id(device.getId());
         deviceRepository.delete(device);
         return true;
     }

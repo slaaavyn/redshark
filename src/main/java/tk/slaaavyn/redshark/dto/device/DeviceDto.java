@@ -2,7 +2,7 @@ package tk.slaaavyn.redshark.dto.device;
 
 import tk.slaaavyn.redshark.dto.user.UserResponseDto;
 import tk.slaaavyn.redshark.model.Device;
-import tk.slaaavyn.redshark.model.JobType;
+import tk.slaaavyn.redshark.model.TaskType;
 
 import java.util.Arrays;
 
@@ -10,14 +10,14 @@ public class DeviceDto {
     private Long id;
     private String name;
     private UserResponseDto owner;
-    private JobType[] availableJobTypes;
+    private TaskType[] availableTaskTypes;
 
     public static DeviceDto toDto(Device device) {
         DeviceDto deviceDto = new DeviceDto();
         deviceDto.setId(device.getId());
         deviceDto.setName(device.getName());
         deviceDto.setOwner(UserResponseDto.toDto(device.getUser()));
-        deviceDto.setAvailableJobTypes(JobType.values());
+        deviceDto.setAvailableTaskTypes(TaskType.values());
 
         return deviceDto;
     }
@@ -46,12 +46,12 @@ public class DeviceDto {
         this.owner = owner;
     }
 
-    public JobType[] getAvailableJobTypes() {
-        return availableJobTypes;
+    public TaskType[] getAvailableTaskTypes() {
+        return availableTaskTypes;
     }
 
-    public void setAvailableJobTypes(JobType[] availableJobTypes) {
-        this.availableJobTypes = availableJobTypes;
+    public void setAvailableTaskTypes(TaskType[] availableTaskTypes) {
+        this.availableTaskTypes = availableTaskTypes;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class DeviceDto {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", owner=" + owner +
-                ", availableJobTypes=" + Arrays.toString(availableJobTypes) +
+                ", availableJobTypes=" + Arrays.toString(availableTaskTypes) +
                 '}';
     }
 }
