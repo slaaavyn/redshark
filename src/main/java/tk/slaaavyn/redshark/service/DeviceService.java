@@ -14,6 +14,4 @@ public interface DeviceService {
     Device getDevice(long deviceId);
 
     Device updateDeviceName(long ownerId, long deviceId, String deviceName);
-
-    boolean removeDevice(long ownerId, long deviceId);
 }

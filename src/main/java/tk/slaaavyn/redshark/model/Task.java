@@ -23,9 +23,13 @@ public class Task {
 
     @Column(name = "status", nullable = false)
     private TaskStatus status;
-
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "task_id")
+    
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "Task_File",
+            joinColumns = { @JoinColumn(name = "task_id") },
+            inverseJoinColumns = { @JoinColumn(name = "file_id") }
+    )
     private List<File> files;
 
     public Long getId() {

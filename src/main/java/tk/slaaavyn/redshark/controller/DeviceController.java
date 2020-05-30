@@ -84,17 +84,4 @@ public class DeviceController {
 
         return ResponseEntity.ok(DeviceDto.toDto(device));
     }
-
-    @DeleteMapping
-    @ApiOperation(value = "Delete authorized user device by id. Action as role: ADMIN, USER")
-    @ApiImplicitParam(name = "Authorization", value = "token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<Boolean> deleteDevice(@RequestParam("deviceId") Long deviceId) {
-        JwtUser jwtUser = ((JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-
-        if(deviceId == null || !deviceService.removeDevice(jwtUser.getId(), deviceId)) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok(true);
-    }
 }

@@ -47,6 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 /* FILES */
                 .antMatchers(EndpointConstants.FILES_ENDPOINT + "/**").authenticated()
 
+                /* TASK */
+                .antMatchers(HttpMethod.GET,EndpointConstants.TASK_ENDPOINT + "/get-all").hasRole("ADMIN")
+                .antMatchers(EndpointConstants.TASK_ENDPOINT + "/**").authenticated()
+
                 /* SWAGGER */
                 .antMatchers("/webjars/**", "/v2/api-docs/**", "/configuration/ui/**", "/swagger-resources/**",
                         "/configuration/security/**", "/swagger-ui.html/**", "/swagger-ui.html#/**").permitAll()

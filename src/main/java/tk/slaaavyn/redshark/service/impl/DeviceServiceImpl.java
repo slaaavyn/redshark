@@ -64,16 +64,4 @@ public class DeviceServiceImpl implements DeviceService {
 
         return deviceRepository.save(device);
     }
-
-    @Override
-    public boolean removeDevice(long ownerId, long deviceId) {
-        Device device = deviceRepository.findDeviceById(deviceId);
-        if (device == null || !device.getUser().getId().equals(ownerId)) {
-            return false;
-        }
-
-        fileRepository.deleteAllByDevice_Id(device.getId());
-        deviceRepository.delete(device);
-        return true;
-    }
 }
