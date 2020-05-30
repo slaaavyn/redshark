@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface FileRepository extends JpaRepository<File, Long> {
     File findByIdAndDevice_Id(Long fileId, Long deviceId);
+    File findByDevice_IdAndNameAndParent_Name(Long deviceId, String fileName, String parentName);
     File findByIdAndDevice_IdAndFileType(Long fileId, Long deviceId, FileType fileType);
     File findByDevice_IdAndParent_IdAndName(Long deviceId, Long parentId, String fileName);
     List<File> findAllByDevice_IdAndParent_Id(Long deviceId, Long parentId);

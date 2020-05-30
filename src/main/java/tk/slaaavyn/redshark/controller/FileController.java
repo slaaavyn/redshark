@@ -79,7 +79,9 @@ public class FileController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Get device file tree by id. Action as role: ADMIN, USER")
+    @ApiOperation(value = "Get device file tree by id. " +
+            "If you do not specify fileId, a list of root directory files is displayed. " +
+            "Action as role: ADMIN, USER")
     @ApiImplicitParam(name = "Authorization", value = "token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<FileDto> getFiles(
             @RequestParam(name = "deviceId", required = true) Long deviceId,
@@ -105,6 +107,10 @@ public class FileController {
         // Get another directory by id
         File file = fileService.getFile(fileId, deviceId, jwtUser.getId());
         List<File> directoryChildren = fileService.getDirectoryChildren(file);
+        if(file == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         if (file.getFileType() == FileType.DIRECTORY && directoryChildren != null) {
             return ResponseEntity.ok(FileDtoFactory.toDto(file, directoryChildren));
         }

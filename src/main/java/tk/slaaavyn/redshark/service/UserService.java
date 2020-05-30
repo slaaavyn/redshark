@@ -21,6 +21,4 @@ public interface UserService {
     User updateUserRole(long userId, String roleName);
 
     boolean updatePassword(long userId, UpdatePasswordDto passwordDto);
-
-    boolean removeById(long userId);
 }

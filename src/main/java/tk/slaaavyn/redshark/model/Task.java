@@ -23,7 +23,7 @@ public class Task {
 
     @Column(name = "status", nullable = false)
     private TaskStatus status;
-    
+
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "Task_File",

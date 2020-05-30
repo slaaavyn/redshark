@@ -72,16 +72,4 @@ public class UserController {
 
         return ResponseEntity.ok(UserResponseDto.toDto(result));
     }
-
-    @DeleteMapping(value = "{id}")
-    @ApiOperation(value = "Delete registered user by id. Action as role: ADMIN")
-    @ApiImplicitParam(name = "Authorization", value = "token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<Object> deleteAdmin(@PathVariable(name = "id") Long id) {
-        boolean isSuccess = userService.removeById(id);
-        if(!isSuccess){
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok().build();
-    }
 }

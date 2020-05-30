@@ -115,19 +115,6 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    @Override
-    public boolean removeById(long userId) {
-        User user = userRepository.findUserById(userId);
-        if(user == null || !isNotLastAdmin(user)) {
-            return false;
-        }
-
-        deviceRepository.deleteAllByUser_Id(user.getId());
-        userRepository.delete(user);
-        return true;
-    }
-
-
     private boolean isUsernameExist(String username) {
         return userRepository.findUserByUsername(username) != null;
     }
