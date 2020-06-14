@@ -46,7 +46,7 @@ public class DeviceController {
 
         Device device = deviceService.getDevice(deviceId);
 
-        if(!device.getUser().getId().equals(jwtUser.getId())) {
+        if(device == null || !device.getUser().getId().equals(jwtUser.getId())) {
             return ResponseEntity.badRequest().build();
         }
 
